@@ -41,6 +41,7 @@ import {
   NotificationPageIndex,
   NotificationDetail,
 } from './views/notifications';
+import { Banner } from "./components/banner";
 
 const SwaggerView = React.lazy(() => import('./views/swagger'));
 const ApiDocsView = () => (
@@ -117,6 +118,7 @@ function App() {
           </Router>
         </QueryParamProvider>
       </div>
+      <Banner />
       <Router primary={false}>
         <Footer path="/*" />
       </Router>
