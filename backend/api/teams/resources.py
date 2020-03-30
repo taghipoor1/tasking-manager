@@ -276,6 +276,7 @@ class TeamsRestAPI(Resource):
 
 
 class TeamsAllAPI(Resource):
+    @token_auth.login_required
     def get(self):
         """
         Gets all teams
@@ -285,6 +286,12 @@ class TeamsAllAPI(Resource):
         produces:
           - application/json
         parameters:
+            - in: header
+              name: Authorization
+              description: Base64 encoded session token
+              required: true
+              type: string
+              default: Token sessionTokenHere==
             - in: query
               name: team_name
               description: name of the team to filter by
