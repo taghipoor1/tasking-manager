@@ -332,6 +332,13 @@ class TeamsAllAPI(Resource):
             500:
                 description: Internal Server Error
         """
+        try:
+            user_id = tm.authenticated_user_id
+            user_orgs = OrganisationService.get_organisations_managed_by_user(user_id)
+        except Exception as e:
+            error_msg = f"Teams GET - unhandled error: {str(e)}"
+            current_app.logger.critical(error_msg)
+            return {"Error": error_msg}, 500
 
         filters = {}
         filters["team_name_filter"] = request.args.get("team_name")
@@ -352,7 +359,9 @@ class TeamsAllAPI(Resource):
 
             organisation_filter = request.args.get("organisation")
             filters["organisation_filter"] = (
-                int(organisation_filter) if organisation_filter else None
+                int(organisation_filter)
+                if organisation_filter
+                else [org.id for org in user_orgs]
             )
 
             teams = TeamService.get_all_teams(**filters)
