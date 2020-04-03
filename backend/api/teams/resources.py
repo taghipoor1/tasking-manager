@@ -344,7 +344,7 @@ class TeamsAllAPI(Resource):
         filters["team_name_filter"] = request.args.get("team_name")
         try:
             member_filter = request.args.get("member")
-            filters["member_filter"] = int(member_filter) if member_filter else None
+            filters["member_filter"] = int(member_filter) if member_filter else user_id
 
             manager_filter = request.args.get("manager")
             filters["manager_filter"] = int(manager_filter) if manager_filter else None

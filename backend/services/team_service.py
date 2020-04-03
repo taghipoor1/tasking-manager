@@ -186,21 +186,17 @@ class TeamService:
     ) -> TeamsListDTO:
 
         query = db.session.query(Team).outerjoin(TeamMembers).outerjoin(ProjectTeams)
-        is_org_manager = len(organisation_filter) > 0
         orgs_query = None
 
         if organisation_filter:
             orgs_query = query.filter(Team.organisation_id.in_(organisation_filter))
 
-        if is_org_manager or manager_filter:
+        if manager_filter:
             query = query.filter(
                 TeamMembers.user_id == manager_filter,
                 TeamMembers.active == True,  # noqa
                 TeamMembers.function == TeamMemberFunctions.MANAGER.value,
             )
-
-        if orgs_query:
-            query = query.union(orgs_query)
 
         if team_name_filter:
             query = query.filter(Team.name.contains(team_name_filter))
@@ -222,6 +218,9 @@ class TeamService:
                 TeamMembers.user_id == member_request_filter,
                 TeamMembers.active == False,  # noqa
             )
+
+        if orgs_query:
+            query = query.union(orgs_query)
 
         teams_list_dto = TeamsListDTO()
 
