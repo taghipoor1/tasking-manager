@@ -17,7 +17,7 @@ import { getEditors } from '../../utils/editorsList';
 import { openEditor } from '../../utils/openEditor';
 import { pushToLocalJSONAPI, fetchLocalJSONAPI } from '../../network/genericJSONRequest';
 import { TaskHistory } from './taskActivity';
-
+import { useSetProjectPageTitleTag } from '../../hooks/UseMetaTags';
 import DueDateBox from '../projectcard/dueDateBox';
 
 const Editor = React.lazy(() => import('../editor'));
@@ -25,6 +25,7 @@ const Editor = React.lazy(() => import('../editor'));
 export function TaskMapAction({ project, projectIsReady, tasks, activeTasks, action, editor }) {
   const userDetails = useSelector((state) => state.auth.get('userDetails'));
   const locale = useSelector((state) => state.preferences.locale);
+  useSetProjectPageTitleTag(project);
   const [activeSection, setActiveSection] = useState('completion');
   const [activeEditor, setActiveEditor] = useState(editor);
   const [showSidebar, setShowSidebar] = useState(true);
