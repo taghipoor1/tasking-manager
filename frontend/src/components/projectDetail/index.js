@@ -28,7 +28,7 @@ import { OSMChaButton } from './osmchaButton';
 /* lazy imports must be last import */
 const TaskLineGraphViz = React.lazy(() => import('./taskLineGraphViz'));
 
-const ProjectDetailTypeBar = props => {
+const ProjectDetailTypeBar = (props) => {
   const titleClasses = 'db ttu f6 blue-light mb2';
   return (
     <div className="cf">
@@ -50,7 +50,7 @@ const ProjectDetailTypeBar = props => {
   );
 };
 
-const ProjectDetailMap = props => {
+const ProjectDetailMap = (props) => {
   const [taskBordersOnly, setTaskBordersOnly] = useState(true);
 
   var taskBordersGeoJSON = props.project.areaOfInterest && {
@@ -90,7 +90,7 @@ const ProjectDetailMap = props => {
       {taskBordersOnly && (
         <div className="cf left-1 top-1 absolute">
           <div className="cf ttu bg-white barlow-condensed f4 pv2">
-            <span onClick={e => setTaskBordersOnly(false)} className="pb2 mh2 pointer ph2">
+            <span onClick={(e) => setTaskBordersOnly(false)} className="pb2 mh2 pointer ph2">
               <FormattedMessage {...messages.zoomToTasks} />
             </span>
           </div>
@@ -100,17 +100,19 @@ const ProjectDetailMap = props => {
   );
 };
 
-export const ProjectDetailLeft = props => {
+export const ProjectDetailLeft = (props) => {
   const htmlShortDescription =
     props.project.projectInfo && htmlFromMarkdown(props.project.projectInfo.shortDescription);
   useTitle(
-    `#${props.project.projectId || 'Tasking Manager'}: ${props.project.projectInfo &&
-      props.project.projectInfo.name}`,
+    `#${props.project.projectId || 'Tasking Manager'}: ${
+      props.project.projectInfo && props.project.projectInfo.name
+    }`,
   );
   useMeta({
     property: 'og:title',
-    content: `#${props.project.projectId || 'Tasking Manager'}: ${props.project.projectInfo &&
-      props.project.projectInfo.name}`,
+    content: `#${props.project.projectId || 'Tasking Manager'}: ${
+      props.project.projectInfo && props.project.projectInfo.name
+    }`,
   });
   // useMeta({name: 'application-name', content: `#${props.project.projectId || "Tasking Manager"}: ${props.project.projectInfo && props.project.projectInfo.name}` });
   // useMeta({name: 'description', content: `#${props.project.projectId || "Tasking Manager"}: ${props.project.projectInfo && props.project.projectInfo.name}` });
@@ -125,9 +127,9 @@ export const ProjectDetailLeft = props => {
           ready={typeof props.project.projectId === 'number'}
         >
           <ProjectHeader project={props.project} />
-          <section className={`lh-copy h-100 overflow-x-scroll`}>
+          <section className="lh-title h-100 overflow-x-scroll">
             <div className="pr2" dangerouslySetInnerHTML={htmlShortDescription} />
-            <div className="pv2">
+            <div>
               <a href="#description" className="link base-font bg-white f6 bn pn red pointer">
                 <span className="pr2 ttu f6 fw6">
                   <FormattedMessage {...messages.readMore} />
@@ -188,7 +190,7 @@ export const ProjectDetailLeft = props => {
             percentMapped={props.project.percentMapped}
             percentValidated={props.project.percentValidated}
           />
-          <div className="cf pb1 h2 bg-white">
+          <div className="cf pb1 bg-white">
             <MappingLevelMessage
               level={props.project.mapperLevel}
               className="tl f5 mt1 ttc fw5 blue-dark"
@@ -202,7 +204,7 @@ export const ProjectDetailLeft = props => {
   );
 };
 
-export const ProjectDetail = props => {
+export const ProjectDetail = (props) => {
   const htmlDescription =
     props.project.projectInfo && htmlFromMarkdown(props.project.projectInfo.description);
   const h2Classes = 'pl4 f2 fw6 mt2 mb3 ttu barlow-condensed blue-dark';
